@@ -1,0 +1,18 @@
+name: demo_dom_transform
+url: "https://quotes.toscrape.com/"
+type: dom
+
+extract:
+  author:
+    selector: "div.quote small.author"
+    attribute: text
+    multiple: true
+    transform: strip
+
+  author_tagged:
+    selector: "div.quote small.author"
+    attribute: text
+    multiple: true
+    transform:
+      - strip
+      - "custom:fake_currency"

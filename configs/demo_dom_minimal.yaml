@@ -1,0 +1,8 @@
+name: demo_dom_minimal
+url: "https://example.com/"
+type: dom
+
+extract:
+  title:
+    selector: "h1"
+    transform: strip

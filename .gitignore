@@ -1,0 +1,26 @@
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# scrapy / scrapyd
+.scrapy/
+twistd.pid
+dbs/
+eggs/
+
+# results & logs
+results/
+logs/
+
+# custom
+*.rl
+/.notes
+
+# flow
+/.flow

@@ -1,0 +1,27 @@
+name: demo_dom_pagination
+url: "https://quotes.toscrape.com/page/{page}/"
+type: dom
+
+pagination:
+  type: next_link
+  selector: "li.next a::attr(href)"
+  max_pages: 3
+
+extract:
+  text:
+    selector: "div.quote span.text"
+    attribute: text
+    multiple: true
+    transform: strip
+
+  author:
+    selector: "div.quote small.author"
+    attribute: text
+    multiple: true
+    transform: strip
+
+  tags:
+    selector: "div.quote div.tags"
+    attribute: text
+    multiple: true
+    transform: strip
