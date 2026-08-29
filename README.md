@@ -59,6 +59,25 @@ pytest                            # unit + API tests
 LOOM_RUN_NETWORK_TESTS=1 pytest   # also e2e real crawl
 ```
 
+### Ruff on Termux
+
+On Termux, `pip install ruff` triggers a Rust source build (no Termux-compatible
+wheel is published on PyPI), which is slow. Install the prebuilt musl static
+binary instead:
+
+```bash
+RUFF_VERSION=0.16.5
+cd "$PREFIX/tmp"
+
+curl -sL -o ruff.tar.gz \
+  "https://github.com/astral-sh/ruff/releases/download/${RUFF_VERSION}/ruff-aarch64-unknown-linux-musl.tar.gz"
+
+tar xzf ruff.tar.gz
+install -m 755 ruff-aarch64-unknown-linux-musl/ruff ~/.local/bin/ruff
+
+ruff --version
+```
+
 ## Run the server
 
 ### Linux / macOS / Termux / WSL
