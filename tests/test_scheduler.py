@@ -3,6 +3,7 @@
 The real-subprocess scenario hits quotes.toscrape.com and is gated by
 LOOM_RUN_NETWORK_TESTS=1, matching test_integration_quotes.py.
 """
+
 import os
 import time
 

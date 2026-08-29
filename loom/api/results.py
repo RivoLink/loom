@@ -13,5 +13,5 @@ def result_exists(job_id: str) -> bool:
 
 
 def read_result(job_id: str) -> list[dict]:
-    with open(result_path(job_id), "r", encoding="utf-8") as f:
+    with open(result_path(job_id), encoding="utf-8") as f:
         return json.load(f)

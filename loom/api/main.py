@@ -8,7 +8,6 @@ from .models import JobAccepted, JobRequest, JobResult, JobStatus
 from .results import read_result, result_exists
 from .scheduler import Scheduler, UnknownTarget
 
-
 scheduler = Scheduler(results_dir=loom_settings.LOOM_RESULTS_DIR)
 
 
@@ -29,7 +28,7 @@ async def submit_job(req: JobRequest) -> JobAccepted:
         raise HTTPException(
             status_code=404,
             detail=f"unknown target_name: {req.target_name!r}",
-        )
+        ) from None
     return JobAccepted(job_id=job_id, spider=scheduler.spider_of(job_id))
 
 

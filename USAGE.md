@@ -138,7 +138,7 @@ register_custom_spider("my_target", MySpider)
 Then in `loom/spiders/custom/__init__.py` add :
 
 ```python
-from . import my_spider   # noqa: F401 (triggers registration)
+from . import my_spider  # noqa: F401 (triggers registration)
 ```
 
 The resolver picks the custom spider over YAML when

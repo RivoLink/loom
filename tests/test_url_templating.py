@@ -13,12 +13,15 @@ def temp_configs(tmp_path, monkeypatch):
 
 def _write_dom_config(path, url):
     with open(path, "w", encoding="utf-8") as f:
-        yaml.safe_dump({
-            "name": "t",
-            "url": url,
-            "type": "dom",
-            "extract": {"title": {"selector": "h1"}},
-        }, f)
+        yaml.safe_dump(
+            {
+                "name": "t",
+                "url": url,
+                "type": "dom",
+                "extract": {"title": {"selector": "h1"}},
+            },
+            f,
+        )
 
 
 def test_format_with_provided_params(temp_configs):

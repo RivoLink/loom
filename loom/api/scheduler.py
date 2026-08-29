@@ -7,6 +7,7 @@ in the same interpreter (second call would raise ReactorNotRestartable).
 Fresh subprocess per job also isolates native crashes (lxml, cryptography)
 from the API.
 """
+
 from __future__ import annotations
 
 import json
@@ -19,7 +20,6 @@ from multiprocessing.pool import AsyncResult, Pool
 from typing import Literal
 
 from loom.resolver import resolve_spider_name
-
 
 JobStatus = Literal["pending", "running", "finished", "failed", "unknown"]
 
@@ -118,6 +118,7 @@ def _run_crawl_subprocess(
     os.environ.setdefault("LOOM_RESULTS_DIR", results_dir)
     from scrapy.crawler import CrawlerProcess
     from scrapy.settings import Settings
+
     from loom import settings as loom_settings
     from loom.resolver import resolve_spider_class
 
