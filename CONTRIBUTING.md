@@ -42,6 +42,9 @@ make demo
 Before submitting a PR, run the full validation sequence:
 
 ```bash
+ruff check .                        # lint (auto-fix with --fix)
+ruff format --check .               # format check (apply with `ruff format .`)
+
 pytest                              # unit + integration (network tests skipped)
 LOOM_RUN_NETWORK_TESTS=1 pytest     # full suite incl. real e2e crawls
 ```
