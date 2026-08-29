@@ -1,0 +1,81 @@
+name: CI Check
+
+on:
+  push:
+    branches:
+      - fix/**
+      - feat/**
+      - docs/**
+      - chore/**
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci-check:
+    name: CI check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit message
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_SHA: ${{ github.sha }}
+        run: |
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            SHA="$PR_SHA"
+          else
+            SHA="$PUSH_SHA"
+          fi
+
+          MSG=$(git log -1 --pretty=%s "$SHA")
+          echo "Commit message: $MSG"
+
+          if echo "$MSG" | grep -qE '^(Merge |[0-9]+\.[0-9]+\.[0-9]+$)'; then
+            echo "Skip: merge commit or version commit"
+            exit 0
+          fi
+
+          if ! echo "$MSG" | grep -qE '^(fix|chore|docs|feat): .+$'; then
+            echo "::error::Invalid commit message: must be prefixed by fix:, chore:, docs: or feat:"
+            exit 1
+          fi
+
+          MAX_LEN=35
+          if [ ${#MSG} -gt $MAX_LEN ]; then
+            echo "::error::Commit message too long (${#MSG} > ${MAX_LEN} chars). Put commit description for more details."
+            exit 1
+          fi
+
+          echo "Valid commit message"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -e ".[dev,api]"
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Smoke test scrap
+        env:
+          SCRAPY_SETTINGS_MODULE: loom.settings
+          LOOM_RESULTS_DIR: ${{ runner.temp }}/loom-results
+          LOOM_CONFIGS_DIR: ${{ github.workspace }}/configs
+        run: |
+          mkdir -p "$LOOM_RESULTS_DIR"
+          scrapy crawl loom -a target_name=demo_dom_minimal
