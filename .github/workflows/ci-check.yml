@@ -68,7 +68,13 @@ jobs:
       - name: Install dependencies
         run: pip install -e ".[dev,api]"
 
-      - name: Run tests
+      - name: Run lint check
+        run: ruff check .
+
+      - name: Run format check
+        run: ruff format --check .
+
+      - name: Run unit tests
         run: pytest -q
 
       - name: Smoke test scrap
