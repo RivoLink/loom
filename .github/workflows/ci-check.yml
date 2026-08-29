@@ -73,7 +73,6 @@ jobs:
 
       - name: Smoke test scrap
         env:
-          SCRAPY_SETTINGS_MODULE: loom.settings
           LOOM_RESULTS_DIR: ${{ runner.temp }}/loom-results
           LOOM_CONFIGS_DIR: ${{ github.workspace }}/configs
         run: |
