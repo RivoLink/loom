@@ -27,8 +27,38 @@ dev = [
     "pytest>=8.4",
     "pytest-asyncio>=1.0",
     "httpx2>=2.9",
+    "ruff>=0.6",
 ]
 
 [tool.setuptools.packages.find]
 include = ["loom*"]
 exclude = ["tests*"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+extend-exclude = [
+    ".venv",
+    "build",
+    "dist",
+    "results",
+    ".flow",
+    ".notes",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "UP",     # pyupgrade
+    "B",      # flake8-bugbear
+    "SIM",    # flake8-simplify
+]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
+
+[tool.ruff.format]

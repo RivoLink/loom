@@ -55,6 +55,9 @@ Additional Termux-specific adjustments already built into the code:
 Verify the install:
 
 ```bash
+ruff check .                      # lint
+ruff format --check .             # format check
+
 pytest                            # unit + API tests
 LOOM_RUN_NETWORK_TESTS=1 pytest   # also e2e real crawl
 ```
