@@ -1,7 +1,6 @@
 import pytest
 
-from loom.transforms import apply_transforms, get_transform, register_transform
-from loom.transforms.registry import _REGISTRY
+from loom.transforms import apply_transforms, register_transform
 
 
 def test_strip_builtin():

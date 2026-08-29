@@ -4,9 +4,9 @@ Kept dependency-free so the config loader can run without pydantic.
 The API layer (loom/api/models.py) still uses pydantic: it's only
 imported when running the API, not during spider/config tests.
 """
+
 from dataclasses import dataclass, field, fields, is_dataclass
 from typing import Any
-
 
 TransformSpec = str | list[str] | None
 _ALLOWED_PAGINATION_TYPES = {"next_link", "none"}
@@ -111,9 +111,7 @@ def _build_pagination(raw: dict | None) -> Pagination:
     _check_extra(raw, Pagination, "pagination")
     ptype = raw.get("type", "none")
     if ptype not in _ALLOWED_PAGINATION_TYPES:
-        raise SchemaError(
-            f"pagination.type: {ptype!r} not in {sorted(_ALLOWED_PAGINATION_TYPES)}"
-        )
+        raise SchemaError(f"pagination.type: {ptype!r} not in {sorted(_ALLOWED_PAGINATION_TYPES)}")
     return Pagination(
         type=ptype,
         selector=raw.get("selector"),

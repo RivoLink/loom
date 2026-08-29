@@ -26,9 +26,7 @@ class LoomSpider(scrapy.Spider):
         try:
             self.start_url = self.cfg["url"].format(**self.params)
         except KeyError as e:
-            raise ValueError(
-                f"missing param {e!s} for url template {self.cfg['url']!r}"
-            ) from e
+            raise ValueError(f"missing param {e!s} for url template {self.cfg['url']!r}") from e
         self.headers = self.cfg.get("headers") or {}
         self._pages_seen = 0
 
@@ -74,7 +72,7 @@ class LoomSpider(scrapy.Spider):
         if attribute == "text":
             raw = [s.css("::text").get() or s.get() for s in sel]
         elif attribute.startswith("attr:"):
-            attr = attribute[len("attr:"):]
+            attr = attribute[len("attr:") :]
             raw = [s.attrib.get(attr) for s in sel]
         else:
             raw = [s.get() for s in sel]
@@ -103,9 +101,7 @@ class LoomSpider(scrapy.Spider):
         for field_name, spec in extract.items():
             matches = [m.value for m in jsonpath_parse(spec["path"]).find(data)]
             if spec.get("multiple"):
-                row[field_name] = [
-                    apply_transforms(v, spec.get("transform")) for v in matches
-                ]
+                row[field_name] = [apply_transforms(v, spec.get("transform")) for v in matches]
             else:
                 value = matches[0] if matches else None
                 row[field_name] = apply_transforms(value, spec.get("transform"))

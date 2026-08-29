@@ -3,6 +3,7 @@
 We swap `loom.api.main.scheduler` with an in-process fake so the tests
 are fast and deterministic: no real subprocess, no real crawl.
 """
+
 import json
 
 import pytest
@@ -51,6 +52,7 @@ def client(tmp_path, monkeypatch):
     fake = FakeScheduler(results_dir=str(tmp_path))
     monkeypatch.setattr(api_main, "scheduler", fake)
     from loom.api import results as api_results
+
     monkeypatch.setattr(api_results.loom_settings, "LOOM_RESULTS_DIR", str(tmp_path))
     return TestClient(api_main.app)
 
