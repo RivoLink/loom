@@ -11,7 +11,8 @@ make install          # pip install -e ".[dev,api]"
 make install-termux   # for Termux
 ```
 
-Requires Python 3.10+. Termux has a documented workaround (see [`README.md`](README.md)).
+Requires Python 3.10+. Termux has a documented workaround (see [`README.md`](README.md)).  
+On Termux, `ruff` also requires a prebuilt binary rather than `pip install`, see the "Ruff on Termux" section in [`README.md`](README.md).
 
 ## 2. Start the server
 
