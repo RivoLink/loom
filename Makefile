@@ -2,7 +2,7 @@ REPO_DIR := $(shell pwd)
 export LOOM_RESULTS_DIR ?= $(REPO_DIR)/results
 export LOOM_CONFIGS_DIR ?= $(REPO_DIR)/configs
 
-.PHONY: install install-termux lock upgrade serve scrape demo test clean
+.PHONY: install install-termux lock upgrade serve scrape demo test ci-check clean
 
 # Positional-arg style for "make scrape <target_name> [<params_json>]"
 ifneq (,$(filter scrape,$(MAKECMDGOALS)))
@@ -51,6 +51,11 @@ demo:
 	@$(MAKE) --no-print-directory scrape demo_dom_pagination '{"page":1}'
 
 test:
+	pytest -q
+
+ci-check:
+	ruff check .
+	ruff format --check .
 	pytest -q
 
 clean:
